@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <div id="splash">
-
-    </div>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <div id="splash"></div>
+<!--    <div id="nav">-->
+<!--      <router-link to="/">Home</router-link> |-->
+<!--      <router-link to="/about">About</router-link>-->
+<!--    </div>-->
+    <navigation/>
     <router-view/>
   </div>
 </template>
+<script>
+  import navigation from './components/Navigation';
+  export default {
+    components: {
+      navigation
+    }
+  }
 
+</script>
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+$image-path: '~@/../mdb/mdbvue/img';
+@import '~@/../mdb/mdbvue/scss/mdb-free.scss';
+#app{
+  padding-top: 55px;
+
+}
+
+/*
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,5 +47,5 @@
       color: #42b983;
     }
   }
-}
+}*/
 </style>
