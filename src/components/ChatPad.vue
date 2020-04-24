@@ -12,6 +12,6 @@
     #chatPad{
         background:linear-gradient(120deg, #31577a, #FFFFFF);
         width: 100vw;
-        height: calc(50vh - 55px);
+        height: calc(34vh - 80px);
     }
 </style>

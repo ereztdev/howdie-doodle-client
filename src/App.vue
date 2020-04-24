@@ -1,51 +1,52 @@
 <template>
-  <div id="app">
-    <div id="splash"></div>
-<!--    <div id="nav">-->
-<!--      <router-link to="/">Home</router-link> |-->
-<!--      <router-link to="/about">About</router-link>-->
-<!--    </div>-->
-    <navigation/>
-    <router-view/>
-  </div>
+    <div id="app">
+        <div id="splash"></div>
+        <navigation/>
+        <router-view/>
+    </div>
 </template>
 <script>
-  import navigation from './components/Navigation';
-  export default {
-    components: {
-      navigation
+    import navigation from './components/Navigation';
+
+    export default {
+        components: {
+            navigation
+        }
     }
-  }
 
 </script>
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
-$image-path: '~@/../mdb/mdbvue/img';
-@import '~@/../mdb/mdbvue/scss/mdb-free.scss';
-#app{
-  padding-top: 55px;
+    @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
 
-}
+    $image-path: '~@/../mdb/mdbvue/img';
+    @import '~@/../mdb/mdbvue/scss/mdb-free.scss';
 
-/*
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    @include media-breakpoint-up(xs) {
+        #app {
+            padding-top: 56px;
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+        }
     }
-  }
-}*/
+
+    @include media-breakpoint-up(sm) {
+        #app {
+            padding-top: 64px;
+
+        }
+    }
+
+    @include media-breakpoint-up(md) {
+
+    }
+
+    @include media-breakpoint-up(lg) {
+        #app {
+            padding-top: 80px;
+
+        }
+    }
+
+    @include media-breakpoint-up(xl) {
+    }
+
 </style>
