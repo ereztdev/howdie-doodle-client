@@ -1,7 +1,9 @@
 <template>
     <vue-draggable-resizable id="doodle_brushAndColor"
+                             class="shadow-lg"
                              :parent="true"
                              :resizable="false"
+                             :h="265"
                              drag-handle=".card-header-title"
                              class-name-resizing="my-resizing-class"
                              class-name-active="my-active-class">
@@ -14,20 +16,37 @@
             >brush & color
             </h3>
             <mdb-card-body class="text-center" cascade>
-                <mdb-btn block class="colorButton"
-                         @click="pickColor"
-                         :style="`
-                         background:${colorChosen}!important;
+                <button @click="pickColor"
+                        :style="`
+                         background:${showColorHex}!important;
                          color:${blackOrWhite()}
-                         `">
-                    {{showColorHex}}
-                </mdb-btn>
+                         `"
+                        class="colorButton btn btn-default btn-block ripple-parent">{{showColorHex}}
+                </button>
+
                 <hr/>
-                <label>Brush Size {{brushSize}}</label>
-                <input v-model="brushSize" type="range" class="custom-range" id="customRange1">
-                <div class="colorPicker--wrapper">
-                    <color-picker id="colorPicker" :value="colorChosen" @input="updateValue($event)"></color-picker>
-                    <mdb-btn @click="closeColorPicker" size="sm">close</mdb-btn>
+                <label>Brush Size {{getBrushSize}}</label>
+                <input @input="updateBrushSize($event)"
+                       :value="getBrushSize"
+                       type="range"
+                       class="custom-range"
+                >
+                <button @click="clearAll()"
+                        type="button"
+                        class="btn btn-default btn-block ripple-parent"
+                >clear all
+                </button>
+<!--                <button @click="undoLast()"-->
+<!--                        type="button"-->
+<!--                        class="my-2 btn btn-default btn-block ripple-parent"-->
+<!--                >undo last-->
+<!--                </button>-->
+                <div class="colorPicker--wrapper shadow-lg">
+                    <color-picker id="colorPicker" :value="colorChosen" @input="updateColor($event)"></color-picker>
+                    <button class="my-1 colorButton btn btn-default ripple-parent btn-sm"
+                            @click="closeColorPicker"
+                    >close
+                    </button>
                 </div>
             </mdb-card-body>
         </mdb-card>
@@ -37,7 +56,7 @@
 <script>
     import {Slider} from 'vue-color'
 
-    import {mdbCard, mdbCardBody, mdbBtn} from 'mdbvue';
+    import {mdbCard, mdbCardBody} from 'mdbvue';
     // import $ from 'jquery';
     export default {
         name: "DoodlePallete",
@@ -46,36 +65,29 @@
                 brushSize: 20,
                 colorChosen: '',
                 colorInt: null,
-
             }
         },
         computed: {
             showColorHex() {
-                if (this.colorChosen) {
-                    return this.colorChosen.substr(1)
-                } else
-                    return `Choose Color`
+                return this.$store.state.canvasColor;
+            },
+            getBrushSize() {
+                return this.$store.state.brushSize;
             },
         },
         components: {
             mdbCard,
             mdbCardBody,
-            mdbBtn,
             'color-picker': Slider,
 
         },
         mounted() {
-            // this.$(document).on('click', function (event) {
-            // console.log(event.target);
-            // })
             this.$(".colorPicker--wrapper").hide();
-
         },
         methods: {
             blackOrWhite() {
-                let colorNoHashThis = this.colorChosen.substr(1);
+                let colorNoHashThis = this.$store.state.canvasColor.substr(1);
                 let colorInt = Number.parseInt(colorNoHashThis, 16);
-                console.log(colorInt);
                 this.colorInt = isNaN(colorInt) ? null : colorInt
                 return colorInt > 10000000 ? `black` : `white`;
             },
@@ -88,12 +100,27 @@
             pickColor() {
                 this.$(".colorPicker--wrapper").show();
             },
-            updateValue(event) {
-                this.colorChosen = event.hex;
+            updateColor(event) {
+                this.$store.commit('updateCanvasColor', { colorChosen: event.hex })
+            },
+            updateBrushSize(event) {
+                this.$store.commit('updateBrushSize', { brushSize: event.target.value })
             },
             closeColorPicker() {
                 this.$(".colorPicker--wrapper").hide();
             },
+            clearAll(){
+                let ctx = this.$store.state.ctxElement;
+                let canvasWidth = this.$store.state.canvasWidth;
+                let canvasHeight = this.$store.state.canvasHeight;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                this.$store.commit('addVectors', {reset:true});
+            },
+            // undoLast(){
+            //     this.$store.commit('addVectors', {reset:true});
+            //
+            // },
         },
     }
 </script>
@@ -103,7 +130,7 @@
         background: white;
         position: absolute;
         top: 60px;
-        left: 205px;
+        left: 215px;
     }
 
     .box {
