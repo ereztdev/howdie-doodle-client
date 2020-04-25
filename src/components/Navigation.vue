@@ -75,5 +75,6 @@
     }
     #myBrand{
         font-family: SFFedoraRegular, sans-serif;
+        font-size: 30px;
     }
 </style>
