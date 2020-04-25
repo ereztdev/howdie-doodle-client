@@ -20,7 +20,7 @@
         </div>
     </nav>-->
     <mdb-navbar class="z-depth-2" position="top" dark color="primary" scrolling>
-        <mdb-navbar-brand href="#">Your Logo</mdb-navbar-brand>
+        <mdb-navbar-brand href="#" id="myBrand">Howdie DooDle</mdb-navbar-brand>
         <mdb-navbar-toggler>
             <mdb-navbar-nav>
                 <mdb-nav-item waves-fixed>
@@ -66,4 +66,14 @@
 
     /*    !* the rest of your styling *!*/
     /*}*/
+    @font-face {
+        font-family: 'SFFedoraRegular';
+        src: url('/fonts/sf_fedora-webfont.woff') format('woff'),
+        url('/fonts/SF_Fedora.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    #myBrand{
+        font-family: SFFedoraRegular, sans-serif;
+    }
 </style>
