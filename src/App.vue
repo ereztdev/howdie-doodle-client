@@ -1,18 +1,18 @@
 <template>
     <div id="app">
-<!--        <splash/>-->
+        <splash/>
         <navigation/>
         <router-view v-if="user"/>
     </div>
 </template>
 <script>
     import navigation from './components/Navigation';
-    // import splash from './components/Splash'
+    import splash from './components/Splash'
 
     export default {
         components: {
             navigation,
-            // splash,
+            splash,
         },
         computed:{
             user(){

@@ -34,6 +34,9 @@
         components: {
             mdbBtn, mdbInput
         },
+        created() {
+            this.receiveChats();
+        },
         mounted() {
         },
         computed: {
@@ -54,6 +57,13 @@
                 let text = event.target[0].value;
                 this.$store.commit('setSingleChat', {time, name, text})
                 event.target[0].value = '';
+                this.$socket.emit('chat',{time, name, text});
+            },
+            receiveChats() {
+                this.$socket.on('hello', chatReceived => {
+                    console.log('data',chatReceived);
+                    this.$store.commit('setSingleChat', chatReceived)
+                });
             },
         },
     }

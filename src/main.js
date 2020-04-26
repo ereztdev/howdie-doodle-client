@@ -19,10 +19,10 @@ import 'mdbvue/lib/mdbvue.css'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 import io from 'socket.io-client';
 import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+import store from './store'
 
 const socket = io('http://localhost:3000');
 Vue.prototype.$socket = socket;

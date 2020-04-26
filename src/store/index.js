@@ -15,8 +15,8 @@ export default new Vuex.Store({
         allVectors: [],
         // lastVectors:[]
         user: {
-            id: 'xyz123',
-            name: 'erez'
+            id: '',
+            name: ''
         },
         fullChat: []
     },
@@ -46,6 +46,7 @@ export default new Vuex.Store({
 
         },
         setSingleChat(state, payload) {
+            console.log(payload);
             let fullTimeDate = payload.time;
             let dateTime = moment(fullTimeDate).format('MMMM Do YYYY | HH:mm:ss');
             let name = payload.name;
