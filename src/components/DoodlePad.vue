@@ -22,7 +22,9 @@
 <style scoped lang="scss">
     #doodlePad {
         background: url('/imgs/chalkboard.png');
-        width: 100vw;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
         height: 66vh;
     }
 </style>

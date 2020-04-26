@@ -3,7 +3,9 @@
                              class="shadow-lg"
                              :parent="true"
                              :resizable="false"
-                             :h="265"
+                             :h="311"
+                             :x="100"
+                             :y="100"
                              drag-handle=".card-header-title"
                              class-name-resizing="my-resizing-class"
                              class-name-active="my-active-class">
