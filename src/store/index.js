@@ -13,6 +13,11 @@ export default new Vuex.Store({
     canvasHeight:0,
     allVectors:[],
     // lastVectors:[]
+    user:{
+      id:'xyz123',
+      name:'erez'
+    },
+    fullChat:[]
   },
   mutations: {
     updateCanvasColor(state, payload){
@@ -33,6 +38,17 @@ export default new Vuex.Store({
       }else{
         state.allVectors.push({from:payload.from,to:payload.to})
       }
+    },
+    setUserName(state,payload){
+      if (payload.user.name && payload.user.id)
+      state.user = payload.user
+
+    },
+    setSingleChat(state,payload){
+      let singleChatTime = payload.singleChatTime;
+      let singleChatName = payload.singleChatName;
+      let singleChatText = payload.singleChatText;
+      state.fullChat.push({singleChatTime,singleChatName,singleChatText})
     },
     // updateLastVector(state,payload){
     //   if (payload.reset){
