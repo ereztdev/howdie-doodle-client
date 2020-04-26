@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+
         <div id="splash"></div>
         <navigation/>
         <router-view/>
