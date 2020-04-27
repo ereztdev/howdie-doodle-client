@@ -58,7 +58,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     #splash {
         background: #00b0ff;
         position: fixed;
