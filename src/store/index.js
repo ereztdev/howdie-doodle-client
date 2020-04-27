@@ -13,7 +13,6 @@ export default new Vuex.Store({
         canvasWidth: 0,
         canvasHeight: 0,
         allVectors: [],
-        // lastVectors:[]
         user: {
             id: '',
             name: ''
@@ -36,14 +35,14 @@ export default new Vuex.Store({
         addVectors(state, payload) {
             if (payload.reset) {
                 state.allVectors = [];
-            } else {
-                state.allVectors.push({from: payload.from, to: payload.to})
+            }
+            else{
+                state.allVectors.push(payload)
             }
         },
         setUserName(state, payload) {
             if (payload.user.name && payload.user.id)
                 state.user = payload.user
-
         },
         setSingleChat(state, payload) {
             console.log(payload);
@@ -53,13 +52,6 @@ export default new Vuex.Store({
             let text = payload.text;
             state.fullChat.push({fullTimeDate, dateTime, name, text})
         },
-        // updateLastVector(state,payload){
-        //   if (payload.reset){
-        //     state.lastVectors = [];
-        //   }else{
-        //     state.lastVectors.push({from:payload.from,to:payload.to})
-        //   }
-        // }
     },
     actions: {},
     modules: {}

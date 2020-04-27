@@ -10,7 +10,6 @@
                              class-name-resizing="my-resizing-class"
                              class-name-active="my-active-class">
         <mdb-card cascade>
-
             <h3 @mouseover="grabberUp($event)"
                 @mouseup="grabberUp($event)"
                 @mousedown="grabberDown($event)"
@@ -25,7 +24,6 @@
                          `"
                         class="colorButton btn btn-default btn-block ripple-parent">{{showColorHex}}
                 </button>
-
                 <hr/>
                 <label>Brush Size {{getBrushSize}}</label>
                 <input @input="updateBrushSize($event)"
@@ -38,11 +36,6 @@
                         class="btn btn-default btn-block ripple-parent"
                 >clear all
                 </button>
-<!--                <button @click="undoLast()"-->
-<!--                        type="button"-->
-<!--                        class="my-2 btn btn-default btn-block ripple-parent"-->
-<!--                >undo last-->
-<!--                </button>-->
                 <div class="colorPicker--wrapper shadow-lg">
                     <color-picker id="colorPicker" :value="colorChosen" @input="updateColor($event)"></color-picker>
                     <button class="my-1 colorButton btn btn-default ripple-parent btn-sm"
@@ -59,7 +52,6 @@
     import {Slider} from 'vue-color'
 
     import {mdbCard, mdbCardBody} from 'mdbvue';
-    // import $ from 'jquery';
     export default {
         name: "DoodlePallete",
         data() {
@@ -83,6 +75,9 @@
             'color-picker': Slider,
 
         },
+        created() {
+            this.clearFromSockets();
+        },
         mounted() {
             this.$(".colorPicker--wrapper").hide();
         },
@@ -103,26 +98,29 @@
                 this.$(".colorPicker--wrapper").show();
             },
             updateColor(event) {
-                this.$store.commit('updateCanvasColor', { colorChosen: event.hex })
+                this.$store.commit('updateCanvasColor', {colorChosen: event.hex})
             },
             updateBrushSize(event) {
-                this.$store.commit('updateBrushSize', { brushSize: event.target.value })
+                this.$store.commit('updateBrushSize', {brushSize: event.target.value})
             },
             closeColorPicker() {
                 this.$(".colorPicker--wrapper").hide();
             },
-            clearAll(){
+            clearAll(fromSocket = false) {
                 let ctx = this.$store.state.ctxElement;
                 let canvasWidth = this.$store.state.canvasWidth;
                 let canvasHeight = this.$store.state.canvasHeight;
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
                 ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-                this.$store.commit('addVectors', {reset:true});
+                this.$store.commit('addVectors', {reset: true});
+                if (!fromSocket)
+                    this.$socket.emit('clearAll', {reset: true})
             },
-            // undoLast(){
-            //     this.$store.commit('addVectors', {reset:true});
-            //
-            // },
+            clearFromSockets() {
+                this.$socket.on('clearAll', clearReceived => {
+                    this.clearAll(true);
+                });
+            },
         },
     }
 </script>
@@ -134,28 +132,13 @@
         top: 60px;
         left: 215px;
     }
-
-    .box {
-        width: 500px;
-        height: 500px;
-        background: red;
-    }
-
     .my-resizing-class {
         border: none;
     }
-
     .my-active-class {
-        /*background: red;*/
         border: none;
-
     }
-
     .vdr {
         border: none !important;
-    }
-
-    .doodle_brushAndColor {
-
     }
 </style>

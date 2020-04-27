@@ -1,12 +1,5 @@
 <template>
     <div id="chatPad" class="chat">
-        <!--<div class="chat__chats py-3">
-                <ul class="chat__timeAndName">
-                    <li class="chat__time">12:30</li> |
-                    <li class="chat__user">ereztdev:</li>
-                    <li class="chat__text" style="">This was amazing!</li>
-                </ul>
-        </div>-->
         <div class="chat__chats">
             <div v-for="(chatRow, index) in allChat" v-bind:key="index" class="chatRowItem--wrapper">
                 <div class="chatRowItem chat__time">{{chatRow.dateTime}}</div>
@@ -28,7 +21,6 @@
 <script>
     import {mdbInput, mdbBtn} from 'mdbvue';
     import moment from 'moment';
-
     export default {
         name: "ChatPad",
         components: {
@@ -60,8 +52,7 @@
                 this.$socket.emit('chat',{time, name, text});
             },
             receiveChats() {
-                this.$socket.on('hello', chatReceived => {
-                    console.log('data',chatReceived);
+                this.$socket.on('chat', chatReceived => {
                     this.$store.commit('setSingleChat', chatReceived)
                 });
             },
@@ -69,7 +60,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
     #chatPad {
         position: relative;
         background: white;
@@ -105,5 +96,8 @@
         position: absolute;
         width: 100%;
         bottom: 0;
+        input{
+            border: 1px solid #4285f4!important;
+        }
     }
 </style>

@@ -6,8 +6,8 @@
             @mouseleave="mouseLeave($event)"
     ></canvas>
 </template>
-
 <script>
+    import {mapState} from 'vuex';
     export default {
         name: "Canvas",
         data() {
@@ -20,8 +20,18 @@
                 y: null,
                 lastX: null,
                 lastY: null,
-                lastDraw: []
             }
+        },
+        computed:
+            mapState(
+                ['allVectors']
+            ),
+        watch: {
+            allVectors(newVal, oldVal) {
+            },
+        },
+        created() {
+            this.receiveVectors()
         },
         mounted() {
             this.initCanvas()
@@ -38,15 +48,12 @@
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight * 2 / 3;
                 this.ctx = this.canvas.getContext("2d");
-
-
             },
             mouseDown(e) {
                 this.mousePressed = true;
                 this.drawing = false;
                 this.x = e.pageX - this.$("#myCanvas").offset().left
                 this.y = e.pageY - this.$("#myCanvas").offset().top
-                // this.$store.commit('updateLastVector', {reset: true})
                 this.draw();
                 this.$('#doodle_brushAndColor').css({pointerEvents: 'none'})
                 this.$('.colorPicker--wrapper').hide()
@@ -70,25 +77,34 @@
             draw() {
                 if (this.drawing) {
                     this.ctx.beginPath();
-                    this.ctx.strokeStyle = this.$store.state.canvasColor;
+                    this.ctx.strokeStyle = this.$store.state.canvasColor === 'choose color' ? '#000000' : this.$store.state.canvasColor ;
                     this.ctx.lineWidth = this.$store.state.brushSize;
                     this.ctx.lineJoin = 'round';
-                    console.log(this.lastX, this.x, this.lastY, this.y);
                     this.ctx.moveTo(this.lastX, this.lastY);
                     this.ctx.lineTo(this.x, this.y);
-                    this.$store.commit('addVectors', {
-                        from: {x: this.x, y: this.y},
-                        to: {x: this.lastX, y: this.lastY},
-                    });
+                    let user = this.$store.state.user;
+                    let color = this.$store.state.canvasColor === 'choose color' ? '#000000' : this.$store.state.canvasColor;
+                    let brushSize = this.$store.state.brushSize;
+                    let from = {x: this.x, y: this.y}
+                    let to = {x: this.lastX, y: this.lastY}
+                    this.$socket.emit('painting', {user, color, brushSize, from, to});
                     this.ctx.closePath();
                     this.ctx.stroke();
-                    // this.$store.commit('updateLastVector', {
-                    //     from: {x: this.lastX, y: this.lastY},
-                    //     to: {x: this.x, y: this.y},
-                    // });
                 }
                 this.lastX = this.x;
                 this.lastY = this.y;
+            },
+            receiveVectors() {
+                this.$socket.on('painting', paintingReceived => {
+                    this.ctx.beginPath();
+                    this.ctx.strokeStyle = paintingReceived.color;
+                    this.ctx.lineWidth = paintingReceived.brushSize;
+                    this.ctx.lineJoin = 'round';
+                    this.ctx.moveTo(paintingReceived.to.x, paintingReceived.to.y);
+                    this.ctx.lineTo(paintingReceived.from.x, paintingReceived.from.y);
+                    this.ctx.closePath();
+                    this.ctx.stroke();
+                });
             },
         },
     }

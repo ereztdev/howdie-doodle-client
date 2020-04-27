@@ -29,15 +29,6 @@
                 <mdb-nav-item waves-fixed>
                     <router-link class="nav-link" active-class="active" to="/about">About</router-link>
                 </mdb-nav-item>
-                <!-- Dropdown -->
-                <!--<mdb-dropdown tag="li" class="nav-item">
-                    <mdb-dropdown-toggle tag="a" navLink color="primary" slot="toggle" waves-fixed>Dropdown</mdb-dropdown-toggle>
-                    <mdb-dropdown-menu v-show="active[0]">
-                        <mdb-dropdown-item>Action</mdb-dropdown-item>
-                        <mdb-dropdown-item>Another action</mdb-dropdown-item>
-                        <mdb-dropdown-item>Something else here</mdb-dropdown-item>
-                    </mdb-dropdown-menu>
-                </mdb-dropdown>-->
             </mdb-navbar-nav>
         </mdb-navbar-toggler>
     </mdb-navbar>
@@ -59,13 +50,6 @@
 </script>
 
 <style scoped>
-    /*.navbar {*/
-    /*    -webkit-box-shadow: 0 10px 34px -11px #000;*/
-    /*    -moz-box-shadow: 0 10px 34px -11px #000;*/
-    /*    box-shadow: 0 10px 34px -11px #000;*/
-
-    /*    !* the rest of your styling *!*/
-    /*}*/
     @font-face {
         font-family: 'SFFedoraRegular';
         src: url('/fonts/sf_fedora-webfont.woff') format('woff'),
@@ -76,5 +60,8 @@
     #myBrand{
         font-family: SFFedoraRegular, sans-serif;
         font-size: 30px;
+    }
+    .nav-link{
+        visibility: hidden;
     }
 </style>

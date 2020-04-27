@@ -7,7 +7,7 @@
                 <div class="userInput">
                     <mdb-input class="mt-5 userInput text-danger" placeholder=""
                                ariaDescribedBy="button-addon2">
-                        <mdb-btn type="submit" color="primary" size="md" group slot="append" id="button-addon2">Lets
+                        <mdb-btn type="submit" color="primary" size="md" group slot="append" id="button-addon2">Let's
                             go
                         </mdb-btn>
                     </mdb-input>
@@ -83,8 +83,12 @@
 
     .userInput {
         font-family: SFFedoraRegular, sans-serif;
-        font-size: 24px;
         background: #00bfa5;
-
+        input{
+            font-size: 30px;
+        }
+        button {
+            font-size: 18px;
+        }
     }
 </style>
