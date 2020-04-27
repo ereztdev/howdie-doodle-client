@@ -25,6 +25,9 @@
         components: {
             mdbBtn, mdbInput
         },
+        mounted() {
+            this.$('.userInput input').focus()
+        },
         computed: {
             userIsSet() {
                 return this.$store.state.user.id && this.$store.state.user.name
