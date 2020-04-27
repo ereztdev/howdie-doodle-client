@@ -1,6 +1,6 @@
 # Howdie Doodle
 ## Multi-User streaming chat and canvas drawer
-![](https://github.com/ereztdev/howdie-doodle-client/blob/master/public/imgs/howdie_doodle1.gif?raw=true)
+![](https://github.com/ereztdev/howdie-doodle-client/blob/master/public/imgs/howdie_doodle1.png?raw=true)
 ### CLIENT
 ### pre-requisites
 - **Node.JS** -  if you don;t have it, you can [download it right here](https://nodejs.org/dist/v12.16.2/node-v12.16.2-x64.msi).
